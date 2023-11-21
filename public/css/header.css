@@ -1,0 +1,31 @@
+header{
+    max-width: 100%;
+    display:flex;
+    padding: 10px;
+    flex-direction: row;
+    justify-content:space-evenly;
+}
+
+header a{
+    align-self:center;
+    color: black;
+    background-color: #52CBF7;
+    padding: 8px 24px;
+    border-radius: 8px;
+}
+
+header a:link {
+    text-decoration: none;
+}
+
+header a:visited {
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: none;
+}
+
+header a:active {
+    text-decoration: none;
+}
