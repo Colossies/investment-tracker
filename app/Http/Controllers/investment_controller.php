@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\investment;
 use App\Models\summary;
 use config\logging as Log;
+use Carbon;
 class investment_controller extends Controller
 {
 
@@ -24,7 +25,10 @@ class investment_controller extends Controller
         }
 
         if($req->action == "buy"){
+            $userId = $req->session()->get('user_id');
+
             $investment = new investment();
+            $investment->login_id = $userId;
             $investment->name = $req->name;
             $investment->investment_type = $req->type;
             $investment->action = $req->action;
@@ -40,16 +44,20 @@ class investment_controller extends Controller
             $record = summary::where('name', $req->name)->first();
             if($record != null){
                 error_log("record found");
+                $curr_time = Carbon\Carbon::now();
+                $curr_time->toDateTimeString();
                 $record->update([
                     'value' => $record->value + $amount,
                     'units' => $record->units + $unit,
-                    'value_unit' => ($record->value / $record->unit),
-                    'amount_spent' => $record->amount_spent + ((1 + $req->fee) * $amount)
+                    'value_unit' => ($record->value / $record->units),
+                    'amount_spent' => $record->amount_spent + ((1 + $req->fee) * $amount),
+                    'updated_at' => $curr_time
                 ]);
             }
             else{
                 // Log::debug("record not found");
                 $summary = new summary();
+                $summary->login_id = $userId;
                 $summary->name = $req->name;   
                 $summary->investment_type = $req->type;
                 $summary->value = $amount;
@@ -60,7 +68,10 @@ class investment_controller extends Controller
             }
         }
         else if($req->action == "sell"){
+            $userId = $req->session()->get('user_id');
+
             $investment = new investment();
+            $investment->login_id = $userId;
             $investment->name = $req->name;
             $investment->investment_type = $req->type;
             $investment->action = $req->action;
@@ -88,6 +99,8 @@ class investment_controller extends Controller
 
             
         }
+
+        return redirect()->route('invest');
     }
 
     public function getLog(){
