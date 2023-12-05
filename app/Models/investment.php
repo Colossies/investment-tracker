@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class investment extends Model
 {
     use HasFactory;
+
+    public function login(){
+        return $this->belongsTo(login::class);
+    }
 }
