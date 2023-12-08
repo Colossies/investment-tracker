@@ -1,0 +1,96 @@
+.content{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    /* justify-content:flex-start; */
+}
+
+.welcome{
+    min-width: 60vw;
+    margin-top: -7vh;
+    margin-bottom: 12vh;
+    text-align: center;
+}
+
+.card_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 60vw;
+    margin-top: -10vh;
+    align-content: center;
+}
+
+.card {
+    width: 15vw;
+    height: 30vh;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease-in-out;
+    background-color: #f5f5f5; /* Initial background color */
+    text-align: center;
+}
+
+.card_content {
+    position: relative;
+    text-align: center;
+}
+
+.title{
+    left: 50%;
+    transform: translate(-50%, 80%);
+}
+
+.description{
+    top: 50%;
+    transform: translate(0, 50%);
+}
+
+.title,
+.description {
+    position: absolute;
+    padding: 10px;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.description {
+    opacity: 0;
+}
+
+.card:hover {
+    background-color: #333; /* Change the background color on hover */
+}
+
+.card:hover .title {
+    opacity: 0; /* Hide the title on hover */
+}
+
+.card:hover .description {
+    color: #f1f1f1;
+    opacity: 1; /* Show the description on hover */
+    /* transform: translate(-50%, -50%); */
+}
+
+a{
+    color: black;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
