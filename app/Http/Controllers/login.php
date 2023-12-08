@@ -17,10 +17,12 @@ class login extends Controller
         if($user != null){
             error_log("record found");
             // User already exists
-            return view('register');
+            return redirect()->route('register_fail');
         }
 
-
+        if($req->username == null || $req->password == null){
+            return redirect()->route('register_fail');
+        }
         $acc = new loginDB();
         // username
         $acc->username = $req->username;
@@ -40,11 +42,12 @@ class login extends Controller
             }
             else{
                 // Wrong password
-                
+                return redirect()->route('login_fail');
             }
         }
         else{
             // username not found
+            return redirect()->route('login_fail');
         }
     }
 

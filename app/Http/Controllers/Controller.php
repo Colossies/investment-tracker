@@ -44,7 +44,7 @@ class Controller extends BaseController
         $summary = Login::find($user_id)->summary->skip(($curr_page - 1) * $n)->take($n);
         $summaryNext = Login::find($user_id)->summary->skip(($curr_page) * $n)->take($n);
         $next = 0;
-        if($summaryNext == null) $next = 1;
+        if($summaryNext != null) $next = 1;
         return view("summary", compact('summary', 'curr_page', 'user_id', 'next'));
 
         
@@ -62,24 +62,44 @@ class Controller extends BaseController
         $investment = Login::find($user_id)->investment->skip(($curr_page - 1) * $n)->take($n);
         $next = 0;
         $investmentNext = Login::find($user_id)->investment->skip(($curr_page) * $n)->take($n);
-        if($investmentNext == null) $next = 1;
+        if($investmentNext != null) $next = 1;
         return view("log", compact('investment', 'curr_page', 'user_id', 'next'));
 
     }
 
     public function loginPage(Request $req){
+        $message = null;
         $user_id = $req->session()->get('user_id');
         if($user_id != null){
             return redirect()->route('home');
         }
-        return view("login", compact('user_id'));
+        return view("login", compact('user_id', 'message'));
+    }
+
+    public function loginPageFail(Request $req){
+        $message = "username/password not found";
+        $user_id = $req->session()->get('user_id');
+        if($user_id != null){
+            return redirect()->route('home');
+        }
+        return view("login", compact('user_id', 'message'));
     }
 
     public function registerPage(Request $req){
+        $message = null;
         $user_id = $req->session()->get('user_id');
         if($user_id != null){
             return redirect()->route('home');
         }
-        return view("register", compact('user_id'));
+        return view("register", compact('user_id', 'message'));
+    }
+
+    public function registerPageFail(Request $req){
+        $message = 'Username already exists!';
+        $user_id = $req->session()->get('user_id');
+        if($user_id != null){
+            return redirect()->route('home');
+        }
+        return view("register", compact('user_id', 'message'));
     }
 }
