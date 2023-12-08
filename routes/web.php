@@ -17,12 +17,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', [App\Http\Controllers\Controller::class, 'loginPage'])->name('login');
+Route::get('/login/fail', [App\Http\Controllers\Controller::class, 'loginPageFail'])->name('login_fail');
+Route::get('/register', [App\Http\Controllers\Controller::class, 'registerPage'])->name('register');
+Route::get('/register/fail', [App\Http\Controllers\Controller::class, 'registerPageFail'])->name('register_fail');
+Route::get('/logout', [App\Http\Controllers\login::class, 'logout'])->name('logout');
 Route::get('/home', [App\Http\Controllers\Controller::class, 'home'])->name('home');
 Route::get('/log/{page?}', [App\Http\Controllers\Controller::class, 'log'])->name('log');
 Route::get('/summary/{page?}', [App\Http\Controllers\Controller::class, 'summary'])->name('summary');
 Route::get('/invest', [App\Http\Controllers\Controller::class, 'invest'])->name('invest');
 
 Route::post('/invest/post', [App\Http\Controllers\investment_controller::class,'post'])->name('post_invest');
+Route::post('/login/post', [App\Http\Controllers\login::class,'checkLogin'])->name('login_submit');
+Route::post('/register/post', [App\Http\Controllers\login::class,'register'])->name('register_submit');
 
 
 
