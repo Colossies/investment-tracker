@@ -12,6 +12,19 @@ class investment_controller extends Controller
 {
 
     public function post(Request $req){
+        $userId = $req->session()->get('user_id');
+
+        if($userId == null) return redirect()->route('login');
+        $validation = $req->validate([
+            'name' => 'required',
+            'type' => 'required',
+            'action' => 'required',
+            'amount' => 'required',
+            'unit' => 'required',
+            'price_unit' => 'required',
+            'fee' => 'required'
+        ]);
+
         $unit = 0;
         $amount = 0;
         $req->fee = $req->fee / 100;
@@ -25,8 +38,8 @@ class investment_controller extends Controller
         }
 
         if($req->action == "buy"){
-            $userId = $req->session()->get('user_id');
 
+            
             $investment = new investment();
             $investment->login_id = $userId;
             $investment->name = $req->name;
